@@ -17,6 +17,7 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 		<a href={`/${lang}/`} class:list={{ active: !onBlog }}>{t.navApp}</a>
 		<a href={`/${lang}/blog/`} class:list={{ active: onBlog }}>{t.navBlog}</a>
 	</nav>
+	<div class="right">
 	<div class="lang" role="group" aria-label="Language">
 		{locales.map((l) => (
 			<a href={switchTo(l)} class:list={{ active: l === lang }} hreflang={l} aria-current={l === lang ? 'true' : undefined}>
@@ -25,6 +26,7 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 		))}
 	</div>
 	<a class="btn btn-primary" href={`/${lang}/#download`}>{t.getApp}</a>
+	</div>
 </header>
 
 <style>
@@ -32,10 +34,9 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 		position: sticky;
 		top: 0;
 		z-index: 5;
-		display: flex;
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
 		align-items: center;
-		justify-content: space-between;
-		flex-wrap: wrap;
 		gap: 12px 16px;
 		padding: 16px var(--page-pad);
 		background: rgba(15, 10, 26, 0.9);
@@ -51,8 +52,13 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 	.pages {
 		display: flex;
 		gap: 4px;
-		margin-right: auto;
-		margin-left: 24px;
+		justify-self: center;
+	}
+	.right {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		gap: 12px 16px;
 	}
 	.pages a {
 		padding: 8px 18px;
@@ -84,10 +90,12 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 		color: var(--color-text);
 	}
 	@media (max-width: 700px) {
+		header {
+			grid-template-columns: 1fr auto;
+		}
 		.pages {
-			order: 3;
-			flex: 1 1 100%;
-			margin: 0;
+			grid-column: 1 / -1;
+			grid-row: 2;
 		}
 	}
 </style>
