@@ -9,8 +9,8 @@ export default defineConfig({
 	site: 'https://getrichesapp.com',
 	integrations: [mdx(), sitemap()],
 	i18n: {
-		defaultLocale: 'id',
-		locales: ['id', 'en'],
+		defaultLocale: 'en',
+		locales: ['en', 'id'],
 		routing: { prefixDefaultLocale: true, redirectToDefaultLocale: false },
 	},
 });
