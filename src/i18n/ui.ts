@@ -14,6 +14,8 @@ export const ui = {
 		start: 'Mulai gratis',
 		readDev: 'Baca update dev',
 		balance: 'Total saldo',
+		balanceAmount: 'Rp 12.480.000',
+		budgetAmount: 'Rp 3.2 jt',
 		budgetLeft: 'Sisa anggaran bulan ini',
 		tx: [
 			['Kopi & sarapan', '−Rp 38.000'],
@@ -47,11 +49,13 @@ export const ui = {
 		start: 'Start free',
 		readDev: 'Read dev updates',
 		balance: 'Total balance',
+		balanceAmount: '$4,280.50',
+		budgetAmount: '$320',
 		budgetLeft: 'Budget left this month',
 		tx: [
-			['Coffee & breakfast', '−Rp 38.000'],
-			['October salary', '+Rp 9.500.000'],
-			['Transport', '−Rp 64.000'],
+			['Coffee & breakfast', '−$6.50'],
+			['October salary', '+$3,200.00'],
+			['Transport', '−$12.40'],
 		],
 		featTitle: 'Everything you need',
 		features: [

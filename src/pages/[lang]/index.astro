@@ -32,10 +32,10 @@ const icons: Record<string, string> = {
 				<!-- Placeholder mock — replace with a real app screenshot -->
 				<div class="phone" aria-hidden="true">
 					<div class="muted">{t.balance}</div>
-					<div class="amount">Rp 12.480.000</div>
+					<div class="amount">{t.balanceAmount}</div>
 					<div class="budget">
 						<div class="small">{t.budgetLeft}</div>
-						<div class="big">Rp 3.2 jt</div>
+						<div class="big">{t.budgetAmount}</div>
 						<div class="bar"><div class="fill"></div></div>
 					</div>
 					{t.tx.map(([name, amt]) => (
