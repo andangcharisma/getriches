@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { formatDate, locales, type Locale, ui } from '../../../i18n/ui';
+
+export function getStaticPaths() {
+	return locales.map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Locale;
+const t = ui[lang];
+
+const posts = (await getCollection('blog'))
+	.filter((p) => p.id.startsWith(`${lang}/`))
+	.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const covers = [
+	'linear-gradient(135deg,#7c3aed,#ec4899)',
+	'linear-gradient(135deg,#4c1d95,#7c3aed)',
+	'linear-gradient(135deg,#be185d,#7c3aed)',
+];
+---
+
+<Base lang={lang} title={`${t.blogTag} — Riches`} description={t.blogSub}>
+	<main>
+		<span class="tag tag-accent-2">{t.blogTag}</span>
+		<h1>{t.blogTitle}</h1>
+		<p class="sub">{t.blogSub}</p>
+		<div class="grid">
+			{posts.map((post, i) => (
+				<a class="card card-hoverable" href={`/${lang}/blog/${post.id.split('/')[1]}/`}>
+					<div class="cover" style={`background:${covers[i % covers.length]}`}></div>
+					<div class="card-kicker">{post.data.tag} · {formatDate(post.data.date, lang)}</div>
+					<div class="card-title">{post.data.title}</div>
+					<p class="card-body">{post.data.excerpt}</p>
+				</a>
+			))}
+		</div>
+	</main>
+</Base>
+
+<style>
+	main {
+		padding: clamp(40px, 6vw, 80px) var(--page-pad) 80px;
+	}
+	h1 {
+		font-size: clamp(36px, 6vw, 60px);
+		font-weight: 800;
+		margin-top: 16px;
+	}
+	.sub {
+		font-size: 19px;
+		color: var(--color-text-secondary);
+		max-width: 560px;
+		margin-bottom: 56px;
+	}
+	.grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+		gap: 24px;
+	}
+	.card {
+		color: inherit;
+	}
+	.cover {
+		height: 140px;
+		border-radius: 12px;
+		margin-bottom: 4px;
+	}
+</style>

@@ -1,0 +1,96 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import { formatDate, type Locale, ui } from '../../../i18n/ui';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => {
+		const [lang, slug] = post.id.split('/');
+		return { params: { lang, slug }, props: { post } };
+	});
+}
+const lang = Astro.params.lang as Locale;
+const t = ui[lang];
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base lang={lang} title={`${post.data.title} — Riches`} description={post.data.excerpt}>
+	<article>
+		<a class="back" href={`/${lang}/blog/`}>{t.back}</a>
+		<div class="meta">{post.data.tag} · {formatDate(post.data.date, lang)}</div>
+		<h1>{post.data.title}</h1>
+		<div class="cover"></div>
+		<div class="prose"><Content /></div>
+		<div class="alert alert-info"><p class="alert-body">{t.feedback}</p></div>
+	</article>
+</Base>
+
+<style>
+	article {
+		max-width: 760px;
+		margin: 0 auto;
+		padding: clamp(32px, 5vw, 72px) 20px 80px;
+	}
+	.back:hover {
+		color: #ec4899;
+	}
+	.meta {
+		font-size: 14px;
+		color: var(--color-text-muted);
+		margin: 28px 0 12px;
+	}
+	h1 {
+		font-size: clamp(32px, 5vw, 52px);
+		font-weight: 800;
+		line-height: 1.1;
+		letter-spacing: -0.03em;
+	}
+	.cover {
+		height: clamp(180px, 30vw, 280px);
+		border-radius: 24px;
+		margin: 28px 0 32px;
+		background: linear-gradient(135deg, #7c3aed, #ec4899);
+	}
+	.prose {
+		font-size: 19px;
+		line-height: 1.75;
+		color: var(--color-text-secondary);
+	}
+	.prose :global(p) {
+		margin-bottom: 1.2em;
+	}
+	.prose :global(h2),
+	.prose :global(h3) {
+		color: var(--color-text);
+		margin: 1.6em 0 0.5em;
+	}
+	.prose :global(h2) {
+		font-size: 28px;
+	}
+	.prose :global(h3) {
+		font-size: 22px;
+	}
+	.prose :global(code) {
+		font-family: var(--font-mono);
+		font-size: 0.85em;
+		background: var(--color-surface-2);
+		padding: 2px 6px;
+		border-radius: 6px;
+	}
+	.prose :global(pre) {
+		overflow-x: auto;
+		padding: 16px;
+		border-radius: 12px;
+		background: var(--color-surface);
+		border: 1px solid var(--color-divider);
+	}
+	.prose :global(pre code) {
+		background: none;
+		padding: 0;
+	}
+	.alert {
+		margin-top: 32px;
+	}
+</style>

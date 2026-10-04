@@ -1,19 +1,29 @@
 ---
-const today = new Date();
+import { type Locale, ui } from '../i18n/ui';
+
+interface Props {
+	lang: Locale;
+}
+const { lang } = Astro.props;
 ---
 
 <footer>
-	<p>&copy; {today.getFullYear()} Riches. All rights reserved.</p>
-	<p><a href="/privacy">Privacy Policy</a> · <a href="/docs">Help</a> · <a href="/blog">Blog</a></p>
+	<strong>Riches</strong>
+	<span>{ui[lang].rights}</span>
 </footer>
+
 <style>
 	footer {
-		padding: 2em 1em 6em 1em;
-		background: linear-gradient(var(--gray-gradient)) no-repeat;
-		color: rgb(var(--gray));
-		text-align: center;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 8px 16px;
+		padding: 32px var(--page-pad);
+		border-top: 1px solid var(--color-divider);
+		font-size: 14px;
+		color: var(--color-text-muted);
 	}
-	footer a {
-		color: rgb(var(--gray));
+	strong {
+		color: var(--color-text);
 	}
 </style>
