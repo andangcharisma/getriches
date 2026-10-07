@@ -55,7 +55,10 @@ const icons: Record<string, string> = {
 								<path d={icons[f.icon]} />
 							</svg>
 						</div>
-						<div class="card-kicker">{f.kicker}</div>
+						<div class="kicker-row">
+							<div class="card-kicker">{f.kicker}</div>
+							{'soon' in f && f.soon && <span class="tag tag-accent-2">{t.comingSoon}</span>}
+						</div>
 						<div class="card-title">{f.title}</div>
 						<p class="card-body">{f.body}</p>
 					</div>
@@ -192,6 +195,12 @@ const icons: Record<string, string> = {
 		margin-bottom: 16px;
 		background: linear-gradient(135deg, rgba(124, 58, 237, 0.35), rgba(236, 72, 153, 0.2));
 		border: 1px solid rgba(167, 139, 250, 0.3);
+	}
+	.kicker-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 8px;
 	}
 	.cta {
 		margin: 0 var(--page-pad) 80px;
