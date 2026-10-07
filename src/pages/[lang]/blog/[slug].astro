@@ -1,5 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../../../layouts/Base.astro';
 import { formatDate, type Locale, ui } from '../../../i18n/ui';
 
@@ -21,7 +22,11 @@ const { Content } = await render(post);
 		<a class="back" href={`/${lang}/blog/`}>{t.back}</a>
 		<div class="meta">{post.data.tag} · {formatDate(post.data.date, lang)}</div>
 		<h1>{post.data.title}</h1>
-		<div class="cover"></div>
+		{post.data.cover ? (
+			<Image class="cover" src={post.data.cover} alt="" width={1440} />
+		) : (
+			<div class="cover fallback"></div>
+		)}
 		<div class="prose"><Content /></div>
 		<div class="alert alert-info"><p class="alert-body">{t.feedback}</p></div>
 	</article>
@@ -48,9 +53,13 @@ const { Content } = await render(post);
 		letter-spacing: -0.03em;
 	}
 	.cover {
+		width: 100%;
 		height: clamp(180px, 30vw, 280px);
+		object-fit: cover;
 		border-radius: 24px;
 		margin: 28px 0 32px;
+	}
+	.fallback {
 		background: linear-gradient(135deg, #7c3aed, #ec4899);
 	}
 	.prose {

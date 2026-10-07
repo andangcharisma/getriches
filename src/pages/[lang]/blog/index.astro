@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import Base from '../../../layouts/Base.astro';
 import { formatDate, locales, type Locale, ui } from '../../../i18n/ui';
 
@@ -28,7 +29,11 @@ const covers = [
 		<div class="grid">
 			{posts.map((post, i) => (
 				<a class="card card-hoverable" href={`/${lang}/blog/${post.id.split('/')[1]}/`}>
-					<div class="cover" style={`background:${covers[i % covers.length]}`}></div>
+					{post.data.cover ? (
+						<Image class="cover" src={post.data.cover} alt="" width={600} />
+					) : (
+						<div class="cover" style={`background:${covers[i % covers.length]}`}></div>
+					)}
 					<div class="card-kicker">{post.data.tag} · {formatDate(post.data.date, lang)}</div>
 					<div class="card-title">{post.data.title}</div>
 					<p class="card-body">{post.data.excerpt}</p>
@@ -62,7 +67,9 @@ const covers = [
 		color: inherit;
 	}
 	.cover {
+		width: 100%;
 		height: 140px;
+		object-fit: cover;
 		border-radius: 12px;
 		margin-bottom: 4px;
 	}
