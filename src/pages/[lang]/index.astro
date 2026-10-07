@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { withBase } from '../../i18n/url';
 import { locales, type Locale, ui } from '../../i18n/ui';
 
 export function getStaticPaths() {
@@ -25,7 +26,7 @@ const icons: Record<string, string> = {
 				<div class="actions">
 					<!-- TODO: point to the real store links once the app is published -->
 					<a class="btn btn-brand" href="#download">{t.start}</a>
-					<a class="btn btn-secondary" href={`/${lang}/blog/`}>{t.readDev}</a>
+					<a class="btn btn-secondary" href={withBase(`/${lang}/blog/`)}>{t.readDev}</a>
 				</div>
 			</div>
 			<div class="phone-wrap">

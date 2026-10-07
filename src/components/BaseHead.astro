@@ -1,4 +1,6 @@
 ---
+import { withBase } from '../i18n/url';
+
 interface Props {
 	title: string;
 	description: string;
@@ -9,11 +11,11 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<link rel="icon" href="/favicon.ico" sizes="48x48" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="manifest" href="/site.webmanifest" />
-<link rel="sitemap" href="/sitemap-index.xml" />
+<link rel="icon" href={withBase('/favicon.ico')} sizes="48x48" />
+<link rel="icon" type="image/png" sizes="32x32" href={withBase('/favicon-32.png')} />
+<link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+<link rel="manifest" href={withBase('/site.webmanifest')} />
+<link rel="sitemap" href={withBase('/sitemap-index.xml')} />
 <link rel="canonical" href={canonicalURL} />
 <meta name="generator" content={Astro.generator} />
 <title>{title}</title>

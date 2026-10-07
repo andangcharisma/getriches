@@ -1,3 +1,4 @@
 ---
-return Astro.redirect('/en/');
+import { withBase } from '../i18n/url';
+return Astro.redirect(withBase('/en/'));
 ---

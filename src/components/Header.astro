@@ -1,5 +1,6 @@
 ---
 import { type Locale, locales, ui } from '../i18n/ui';
+import { withBase } from '../i18n/url';
 
 interface Props {
 	lang: Locale;
@@ -7,15 +8,15 @@ interface Props {
 const { lang } = Astro.props;
 const t = ui[lang];
 const path = Astro.url.pathname;
-const onBlog = path.startsWith(`/${lang}/blog`);
-const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
+const onBlog = path.startsWith(withBase(`/${lang}/blog`));
+const switchTo = (l: Locale) => path.replace(withBase(`/${lang}`), withBase(`/${l}`));
 ---
 
 <header>
-	<a class="brand" href={`/${lang}/`}>Riches</a>
+	<a class="brand" href={withBase(`/${lang}/`)}>Riches</a>
 	<nav class="pages">
-		<a href={`/${lang}/`} class:list={{ active: !onBlog }}>{t.navApp}</a>
-		<a href={`/${lang}/blog/`} class:list={{ active: onBlog }}>{t.navBlog}</a>
+		<a href={withBase(`/${lang}/`)} class:list={{ active: !onBlog }}>{t.navApp}</a>
+		<a href={withBase(`/${lang}/blog/`)} class:list={{ active: onBlog }}>{t.navBlog}</a>
 	</nav>
 	<div class="right">
 	<div class="lang" role="group" aria-label="Language">
@@ -25,7 +26,7 @@ const switchTo = (l: Locale) => path.replace(/^\/(id|en)(?=\/|$)/, `/${l}`);
 			</a>
 		))}
 	</div>
-	<a class="btn btn-primary" href={`/${lang}/#download`}>{t.getApp}</a>
+	<a class="btn btn-primary" href={withBase(`/${lang}/#download`)}>{t.getApp}</a>
 	</div>
 </header>
 
