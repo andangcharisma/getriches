@@ -286,6 +286,8 @@ textarea.input { min-height: 96px; resize: vertical; }
 .dialog-actions { display: flex; justify-content: flex-end; gap: var(--space-2); margin-top: var(--space-2); }
 
 /* — Riches site additions — */
-:root { --page-pad: clamp(20px, 5vw, 64px); }
+:root { --content-max: 1200px;
+  /* Side padding that also centers content within --content-max; backgrounds stay full-bleed. */
+  --page-pad: max(clamp(20px, 5vw, 64px), calc((100% - var(--content-max)) / 2)); }
 html { scroll-behavior: smooth; }
 a { text-decoration: none; }
