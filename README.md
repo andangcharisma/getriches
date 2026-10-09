@@ -24,17 +24,19 @@ excerpt: "..."
 
 ## Publish a new app version
 
-The download buttons on the home page point to assets of a GitHub Release in this repo.
+The download buttons on the home page always point to the same two files on the `app-latest` GitHub Release of this repo:
 
-1. Name the files `riches-v<version>.apk` and `riches-v<version>.ipa`.
-2. Create the release and upload both files:
+- `riches-latest.apk`
+- `riches-latest.ipa` (unsigned, installed by users with [Sideloadly](https://sideloadly.io))
+
+For each new version:
+
+1. Copy the build outputs under those fixed names.
+2. Replace the files on the release (the old ones are overwritten, links never change):
    ```bash
-   gh release create v<version> riches-v<version>.apk riches-v<version>.ipa --title "Riches v<version>"
+   gh release upload app-latest riches-latest.apk riches-latest.ipa --clobber --repo andangcharisma/getriches
+   gh release edit app-latest --notes "Latest build of the Riches app: v<version>." --repo andangcharisma/getriches
    ```
-3. Update `src/data/release.json` (`version`, `date`, `android`, `ios`).
+3. Update `src/data/release.json` (`version`, `date`). This is the version shown on the site.
 4. Add the release post (`v<version>` with dots as dashes, e.g. `v0-5-0.md`) so the "Release notes" link works.
 5. Commit and push to `main`. GitHub Actions deploys the site.
-
-Create the release (step 2) before pushing, otherwise the download links return 404 until the files exist.
-
-iOS users install the IPA with [Sideloadly](https://sideloadly.io).
