@@ -83,11 +83,15 @@ const icons: Record<string, string> = {
 				<span class="muted">{releaseDate} · <a href={notesUrl}>{t.releaseNotes}</a></span>
 			</p>
 			<div class="downloads">
-				<a class="btn btn-primary" href={androidUrl}>{t.downloadAndroid}</a>
-				<a class="btn btn-secondary" href={iosUrl}>{t.downloadIos}</a>
+				<div class="platform">
+					<a class="btn btn-primary btn-block" href={androidUrl}>{t.downloadAndroid}</a>
+					<p class="note">{t.androidNote}</p>
+				</div>
+				<div class="platform">
+					<a class="btn btn-secondary btn-block" href={iosUrl}>{t.downloadIos}</a>
+					<p class="note">{t.iosNote} <a href="https://sideloadly.io" target="_blank" rel="noopener">Sideloadly</a>{t.iosNoteTail}</p>
+				</div>
 			</div>
-			<p class="note">{t.androidNote}</p>
-			<p class="note">{t.iosNote} <a href="https://sideloadly.io" target="_blank" rel="noopener">Sideloadly</a>{t.iosNoteTail}</p>
 		</section>
 	</main>
 </Base>
@@ -250,16 +254,27 @@ const icons: Record<string, string> = {
 		color: var(--color-text-muted);
 	}
 	.downloads {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
+		gap: 32px 24px;
+		max-width: 680px;
+		margin: 0 auto;
+		align-items: start;
+	}
+	.platform {
 		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		gap: 12px;
-		margin-bottom: 24px;
+		flex-direction: column;
+		gap: 14px;
+	}
+	.platform .btn {
+		margin-top: 0;
+		padding: 14px 20px;
 	}
 	.cta .note {
 		font-size: 14px;
-		color: var(--color-text-muted);
-		max-width: 560px;
-		margin: 0 auto 8px;
+		line-height: 1.6;
+		color: var(--color-text-secondary);
+		margin: 0;
+		text-wrap: balance;
 	}
 </style>
