@@ -1,13 +1,21 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { withBase } from '../../i18n/url';
-import { locales, type Locale, ui } from '../../i18n/ui';
+import release from '../../data/release.json';
+import { formatDate, locales, type Locale, ui } from '../../i18n/ui';
 
 export function getStaticPaths() {
 	return locales.map((lang) => ({ params: { lang } }));
 }
 const lang = Astro.params.lang as Locale;
 const t = ui[lang];
+
+// Release assets are attached manually to a GitHub Release tagged v<version> (see README).
+const releaseBase = `https://github.com/andangcharisma/getriches/releases/download/v${release.version}`;
+const androidUrl = `${releaseBase}/${release.android}`;
+const iosUrl = `${releaseBase}/${release.ios}`;
+const notesUrl = withBase(`/${lang}/blog/v${release.version.replaceAll('.', '-')}/`);
+const releaseDate = formatDate(new Date(release.date), lang);
 
 const icons: Record<string, string> = {
 	track: 'M12 8v8M8 12h8M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
@@ -70,7 +78,16 @@ const icons: Record<string, string> = {
 		<section id="download" class="cta">
 			<h2>{t.ctaTitle}</h2>
 			<p>{t.ctaSub}</p>
-			<a class="btn btn-brand" href="#download">{t.start}</a>
+			<p class="latest">
+				<span class="tag tag-accent">{t.latest} v{release.version}</span>
+				<span class="muted">{releaseDate} · <a href={notesUrl}>{t.releaseNotes}</a></span>
+			</p>
+			<div class="downloads">
+				<a class="btn btn-primary" href={androidUrl}>{t.downloadAndroid}</a>
+				<a class="btn btn-secondary" href={iosUrl}>{t.downloadIos}</a>
+			</div>
+			<p class="note">{t.androidNote}</p>
+			<p class="note">{t.iosNote} <a href="https://sideloadly.io" target="_blank" rel="noopener">Sideloadly</a>{t.iosNoteTail}</p>
 		</section>
 	</main>
 </Base>
@@ -219,5 +236,30 @@ const icons: Record<string, string> = {
 		font-size: 18px;
 		color: var(--color-text-secondary);
 		margin-bottom: 24px;
+	}
+	.cta .latest {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 8px 12px;
+		font-size: 15px;
+		margin-bottom: 20px;
+	}
+	.muted {
+		color: var(--color-text-muted);
+	}
+	.downloads {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 12px;
+		margin-bottom: 24px;
+	}
+	.cta .note {
+		font-size: 14px;
+		color: var(--color-text-muted);
+		max-width: 560px;
+		margin: 0 auto 8px;
 	}
 </style>

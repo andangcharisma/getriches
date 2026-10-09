@@ -1,63 +1,40 @@
-# Astro Starter Kit: Blog
+# Riches website
 
-```sh
-npm create astro@latest -- --template blog
+Marketing site and dev blog for the Riches app. Built with [Astro](https://astro.build), bilingual (EN default, `/id` for Indonesian), deployed to GitHub Pages at https://andangcharisma.github.io/getriches/.
+
+```bash
+npm install
+npm run dev      # http://localhost:4321/getriches/
+npm run build
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Add a blog post
 
-Features:
+Create the same filename in both `src/content/blog/en/` and `src/content/blog/id/`:
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+```md
+---
+title: "..."
+date: 2026-10-09
+cover: "../../../assets/blog/<slug>.jpg"   # optional, 1440x600 recommended
+tag: "Release"
+excerpt: "..."
+---
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Publish a new app version
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+The download buttons on the home page point to assets of a GitHub Release in this repo.
 
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+1. Name the files `riches-v<version>.apk` and `riches-v<version>.ipa`.
+2. Create the release and upload both files:
+   ```bash
+   gh release create v<version> riches-v<version>.apk riches-v<version>.ipa --title "Riches v<version>"
+   ```
+3. Update `src/data/release.json` (`version`, `date`, `android`, `ios`).
+4. Add the release post (`v<version>` with dots as dashes, e.g. `v0-5-0.md`) so the "Release notes" link works.
+5. Commit and push to `main`. GitHub Actions deploys the site.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Create the release (step 2) before pushing, otherwise the download links return 404 until the files exist.
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
-
-## Credit
-
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+iOS users install the IPA with [Sideloadly](https://sideloadly.io).
