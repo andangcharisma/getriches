@@ -1,4 +1,32 @@
 ---
 import { withBase } from '../i18n/url';
-return Astro.redirect(withBase('/en/'));
+
+// Static hosting cannot do a server redirect, so redirect instantly on the client.
+const target = withBase('/en/');
 ---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<meta name="theme-color" content="#0d0a1a" />
+		<meta http-equiv="refresh" content={`0;url=${target}`} />
+		<link rel="canonical" href={new URL(target, Astro.site)} />
+		<title>Riches</title>
+		<style>
+			html,
+			body {
+				margin: 0;
+				background: #0d0a1a;
+			}
+		</style>
+		<script is:inline define:vars={{ target }}>
+			location.replace(target + location.hash);
+		</script>
+	</head>
+	<body>
+		<noscript><a href={target}>Riches</a></noscript>
+	</body>
+</html>
